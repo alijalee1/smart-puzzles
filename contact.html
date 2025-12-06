@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>اتصل بنا - ألغاز ذكية</title>
+  <meta name="description" content="تواصل مع فريق موقع ألغاز ذكية لاقتراحات الألغاز أو الإعلانات أو التعاون.">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-flex">
+      <div>
+        <h1 class="logo">ألغاز ذكية</h1>
+        <p class="subtitle">اتصل بنا</p>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html">الرئيسية</a>
+        <a href="privacy.html">سياسة الخصوصية</a>
+        <a href="contact.html" class="active">اتصل بنا</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page-card">
+      <h2>يسعدنا تواصلك</h2>
+      <p>
+        يمكنك مراسلتنا لاقتراح ألغاز جديدة، أو طلب تعاون إعلاني، أو الإبلاغ عن أي مشكلة في الموقع.
+      </p>
+
+      <form class="contact-form" onsubmit="handleContactSubmit(event)">
+        <div class="form-group">
+          <label for="name">الاسم</label>
+          <input type="text" id="name" required placeholder="اكتب اسمك هنا" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">البريد الإلكتروني</label>
+          <input type="email" id="email" required placeholder="example@mail.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="message">الرسالة</label>
+          <textarea id="message" rows="5" required placeholder="اكتب رسالتك هنا..."></textarea>
+        </div>
+
+        <button type="submit" class="btn primary">إرسال الرسالة</button>
+        <p id="contact-status" class="status-msg"></p>
+      </form>
+
+      <p style="margin-top: 15px;">
+        أو يمكنك مراسلتنا مباشرة على البريد:
+        <a href="mailto:example@mail.com">example@mail.com</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> ألغاز ذكية - جميع الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
