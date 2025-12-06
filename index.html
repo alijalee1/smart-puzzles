@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>ألغاز ذكية - ألغاز و اختبارات ذكاء بالعربي</title>
+
+  <!-- تحسين SEO -->
+  <meta name="description" content="موقع ألغاز ذكية: ألغاز ذكاء، ألغاز رياضيات، وأسئلة فيزياء ومنطق مع حلول، مناسب للطلاب ومحبي التحديات.">
+  <meta name="keywords" content="ألغاز, اختبارات ذكاء, الغاز رياضيات, ألغاز فيزياء, مسائل, طلاب, ذكاء, تحديات">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph لمشاركة الرابط -->
+  <meta property="og:title" content="ألغاز ذكية - اختبر ذكاءك">
+  <meta property="og:description" content="اختبر ذكاءك مع ألغاز منطقية ورياضية وفيزيائية بالعربي مع الحل.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alijaleel1.github.io/smart-puzzles/">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- رأس الموقع -->
+  <header class="site-header">
+    <div class="container header-flex">
+      <div>
+        <h1 class="logo">ألغاز ذكية</h1>
+        <p class="subtitle">اختبر ذكاءك بألغاز منطقية و مسائل رياضية بسيطة لكن ذكية</p>
+      </div>
+
+      <!-- قائمة التنقل -->
+      <nav class="main-nav">
+        <a href="index.html" class="active">الرئيسية</a>
+        <a href="privacy.html">سياسة الخصوصية</a>
+        <a href="contact.html">اتصل بنا</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- قسم اللغز الرئيسي -->
+  <main class="container">
+    <section class="riddle-card">
+      <h2>لغز اليوم</h2>
+      <p id="riddle-text">
+        جاري تحميل الألغاز... إذا تأخر التحميل اضغط على زر "لغز جديد" 👇
+      </p>
+
+      <button id="show-answer-btn" class="btn" disabled>إظهار الحل</button>
+
+      <p id="answer-text" class="answer hidden"></p>
+
+      <div class="buttons-row">
+        <button id="new-riddle-btn" class="btn primary">لغز جديد</button>
+        <button id="copy-link-btn" class="btn">نسخ رابط اللغز</button>
+      </div>
+
+      <p id="copy-status" class="status-msg"></p>
+    </section>
+
+    <!-- قسم نبذة عن الموقع -->
+    <section class="about-section">
+      <h3>عن الموقع</h3>
+      <p>
+        موقع <strong>ألغاز ذكية</strong> يقدم ألغاز ذكاء منطقية، وألغاز رياضية،
+        وأسئلة في الفيزياء والرياضيات للطلاب ومحبي التحديات الذهنية.
+      </p>
+      <p>
+        يمكنك استخدام الألغاز في فيديوهات قصيرة، حصص دراسية، أو تحديات بين الأصدقاء.
+      </p>
+    </section>
+  </main>
+
+  <!-- ذيل الموقع -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> ألغاز ذكية - جميع الحقوق محفوظة</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
