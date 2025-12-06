@@ -1,0 +1,236 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f5f5;
+  color: #222;
+  line-height: 1.8;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* رأس الموقع */
+.site-header {
+  background: #111827;
+  color: #fff;
+  padding: 18px 0 20px;
+  margin-bottom: 20px;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 1.9rem;
+  margin-bottom: 3px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* قائمة التنقل */
+.main-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.main-nav a:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.main-nav a.active {
+  background: #e5e7eb;
+  color: #111827;
+  border-color: #e5e7eb;
+}
+
+/* كرت اللغز والصفحات */
+.riddle-card,
+.page-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 18px 22px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+.riddle-card h2,
+.page-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+#riddle-text {
+  font-size: 1.05rem;
+  margin-bottom: 15px;
+}
+
+/* أزرار */
+.btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  margin-top: 5px;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  background: #e5e7eb;
+}
+
+.btn.primary {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.buttons-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* نص الحل */
+.answer {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+.hidden {
+  display: none;
+}
+
+/* رسالة الحالة */
+.status-msg {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* قسم عن الموقع */
+.about-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 16px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.about-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+/* نموذج التواصل */
+.contact-form {
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #1d4ed8;
+}
+
+/* نص صغير */
+.small-muted {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* ذيل الموقع */
+.site-footer {
+  text-align: center;
+  padding: 15px 0 25px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* استجابة للجوال */
+@media (max-width: 600px) {
+  .header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .riddle-card,
+  .about-section,
+  .page-card {
+    padding: 16px 14px 18px;
+  }
+
+  .buttons-row {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-nav {
+    width: 100%;
+  }
+}
