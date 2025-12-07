@@ -302,3 +302,31 @@ body {
   color: #6b7280;
 }
 
+/* قائمة ألغاز الرياضيات */
+.math-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.math-item {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  background: #f9fafb;
+}
+
+.math-item h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: #111827;
+}
+
+.math-item p {
+  margin-bottom: 4px;
+}
+
+.math-item .math-answer {
+  font-size: 0.9rem;
+  color: #15803d;
+}
