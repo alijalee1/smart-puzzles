@@ -1,11 +1,11 @@
 let riddles = [];
 let currentRiddle = null;
 
-// عناصر من الـ HTML للصفحة الرئيسية
+// عناصر صفحة اللغز
 const riddleText = document.getElementById("riddle-text");
 const answerText = document.getElementById("answer-text");
 const showAnswerBtn = document.getElementById("show-answer-btn");
-const newRiddleBtn = document.getElementById("newRiddleBtn") || document.getElementById("new-riddle-btn"); // احتياط
+const newRiddleBtn = document.getElementById("new-riddle-btn");
 const copyLinkBtn = document.getElementById("copy-link-btn");
 const copyStatus = document.getElementById("copy-status");
 const yearSpan = document.getElementById("year");
@@ -15,13 +15,14 @@ const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
 const searchResults = document.getElementById("search-results");
 
-// تحديث سنة الفوتر في كل الصفحات
+// تحديث سنة الفوتر
 if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
 
-// تحميل الألغاز من ملف JSON (فقط إذا كنا في الصفحة الرئيسية)
+// تحميل الألغاز من ملف JSON
 function loadRiddles() {
+  // لو لسنا في index.html، لا داعي للتحميل
   if (!riddleText) return;
 
   fetch("riddles.json")
@@ -33,7 +34,7 @@ function loadRiddles() {
         newRiddleBtn.disabled = false;
       }
 
-      // لو فيه كلمة بحث في الرابط (?q=...)
+      // دعم ?q= في الرابط
       const params = new URLSearchParams(window.location.search);
       const initialQuery = params.get("q");
 
@@ -49,12 +50,14 @@ function loadRiddles() {
     })
     .catch((error) => {
       console.error("لم يتم تحميل الألغاز من JSON:", error);
-      riddleText.textContent =
-        "تعذر تحميل الألغاز. يرجى إعادة تحميل الصفحة أو التأكد من الملفات.";
+      if (riddleText) {
+        riddleText.textContent =
+          "تعذر تحميل الألغاز. يرجى إعادة تحميل الصفحة أو التأكد من الملفات.";
+      }
     });
 }
 
-// دالة لاختيار لغز عشوائي
+// اختيار لغز عشوائي
 function getRandomRiddle() {
   if (!riddles.length) return null;
   const index = Math.floor(Math.random() * riddles.length);
@@ -64,14 +67,18 @@ function getRandomRiddle() {
 // عرض لغز جديد
 function showNewRiddle() {
   if (!riddles.length) {
-    riddleText.textContent =
-      "لا توجد ألغاز متاحة حاليًا. تأكد من ملف riddles.json.";
+    if (riddleText) {
+      riddleText.textContent =
+        "لا توجد ألغاز متاحة حاليًا. تأكد من ملف riddles.json.";
+    }
     return;
   }
   currentRiddle = getRandomRiddle();
-  riddleText.textContent = currentRiddle.question;
-  answerText.textContent = currentRiddle.answer;
-  answerText.classList.add("hidden");
+  if (riddleText) riddleText.textContent = currentRiddle.question;
+  if (answerText) {
+    answerText.textContent = currentRiddle.answer;
+    answerText.classList.add("hidden");
+  }
   if (showAnswerBtn) showAnswerBtn.disabled = false;
   if (copyStatus) copyStatus.textContent = "";
 }
@@ -82,7 +89,7 @@ function showAnswer() {
   answerText.classList.remove("hidden");
 }
 
-// نسخ رابط الموقع (مبدئيًا)
+// نسخ رابط الصفحة
 function copyRiddleLink() {
   if (!navigator.clipboard) {
     if (copyStatus) {
@@ -113,6 +120,7 @@ function copyRiddleLink() {
 
 function performSearch(query) {
   if (!searchResults) return;
+
   const q = (query || "").trim().toLowerCase();
 
   if (!q) {
@@ -138,7 +146,6 @@ function performSearch(query) {
     return;
   }
 
-  // عرض أول 10 نتائج
   searchResults.innerHTML = results
     .slice(0, 10)
     .map(
@@ -152,14 +159,14 @@ function performSearch(query) {
     .join("");
 }
 
-// عند إرسال نموذج البحث
+// إرسال نموذج البحث
 if (searchForm && searchInput) {
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const query = searchInput.value;
     performSearch(query);
 
-    // تحديث الرابط بـ ?q= للكسب في الـ SEO
+    // تحديث الرابط بـ ?q= لزيادة فائدة الـ SEO
     const url = new URL(window.location);
     if (query && query.trim() !== "") {
       url.searchParams.set("q", query.trim());
@@ -170,7 +177,7 @@ if (searchForm && searchInput) {
   });
 }
 
-// عند الضغط على نتيجة من نتائج البحث
+// الضغط على نتيجة بحث
 if (searchResults) {
   searchResults.addEventListener("click", (event) => {
     const button = event.target.closest(".search-result-item");
@@ -188,7 +195,6 @@ if (searchResults) {
     }
     if (showAnswerBtn) showAnswerBtn.disabled = false;
 
-    // تمرير الصفحة إلى كرت اللغز
     window.scrollTo({
       top: riddleText.offsetTop - 80,
       behavior: "smooth"
@@ -215,5 +221,16 @@ function handleContactSubmit(event) {
 // نجعل الدالة متاحة في الـ HTML
 window.handleContactSubmit = handleContactSubmit;
 
-// استدعاء تحميل الألغاز عند فتح الصفحة الرئيسية
+// تحميل الألغاز عند فتح الصفحة الرئيسية
 loadRiddles();
+
+// ربط الأزرار الأساسية
+if (newRiddleBtn) {
+  newRiddleBtn.addEventListener("click", showNewRiddle);
+}
+if (showAnswerBtn) {
+  showAnswerBtn.addEventListener("click", showAnswer);
+}
+if (copyLinkBtn) {
+  copyLinkBtn.addEventListener("click", copyRiddleLink);
+}
