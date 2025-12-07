@@ -330,3 +330,19 @@ body {
   font-size: 0.9rem;
   color: #15803d;
 }
+
+/* صندوق مكان الإعلان */
+.ad-box {
+  border: 2px dashed #d1d5db;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+  color: #6b7280;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+/* إعلان الفوتر */
+.footer-ad {
+  margin-top: 30px;
+}
