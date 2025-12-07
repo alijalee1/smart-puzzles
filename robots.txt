@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alijaleel1.github.io/smart-puzzles/sitemap.xml
