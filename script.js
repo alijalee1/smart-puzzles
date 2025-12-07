@@ -1,7 +1,7 @@
 let riddles = [];
 let currentRiddle = null;
 
-// عناصر صفحة اللغز
+// عناصر صفحة اللغز الرئيسية
 const riddleText = document.getElementById("riddle-text");
 const answerText = document.getElementById("answer-text");
 const showAnswerBtn = document.getElementById("show-answer-btn");
@@ -10,10 +10,13 @@ const copyLinkBtn = document.getElementById("copy-link-btn");
 const copyStatus = document.getElementById("copy-status");
 const yearSpan = document.getElementById("year");
 
-// عناصر البحث
+// عناصر البحث (في الصفحة الرئيسية فقط)
 const searchForm = document.getElementById("search-form");
 const searchInput = document.getElementById("search-input");
 const searchResults = document.getElementById("search-results");
+
+// عناصر صفحة ألغاز الرياضيات
+const mathList = document.getElementById("math-list");
 
 // تحديث سنة الفوتر
 if (yearSpan) {
@@ -22,30 +25,38 @@ if (yearSpan) {
 
 // تحميل الألغاز من ملف JSON
 function loadRiddles() {
-  // لو لسنا في index.html، لا داعي للتحميل
-  if (!riddleText) return;
+  // لو لا نحتاج ألغاز في هذه الصفحة، لا نحمّل
+  const needRiddles = riddleText || mathList;
+  if (!needRiddles) return;
 
   fetch("riddles.json")
     .then((response) => response.json())
     .then((data) => {
       riddles = data;
 
-      if (newRiddleBtn) {
-        newRiddleBtn.disabled = false;
+      // تهيئة الصفحة الرئيسية
+      if (riddleText) {
+        if (newRiddleBtn) {
+          newRiddleBtn.disabled = false;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const initialQuery = params.get("q");
+
+        if (initialQuery && searchInput) {
+          searchInput.value = initialQuery;
+          performSearch(initialQuery);
+          riddleText.textContent =
+            'اختر أحد الألغاز من نتائج البحث بالأسفل أو اضغط "لغز جديد".';
+        } else {
+          riddleText.textContent =
+            'اضغط على زر "لغز جديد" للحصول على لغز 👇';
+        }
       }
 
-      // دعم ?q= في الرابط
-      const params = new URLSearchParams(window.location.search);
-      const initialQuery = params.get("q");
-
-      if (initialQuery && searchInput) {
-        searchInput.value = initialQuery;
-        performSearch(initialQuery);
-        riddleText.textContent =
-          'اختر أحد الألغاز من نتائج البحث بالأسفل أو اضغط "لغز جديد".';
-      } else {
-        riddleText.textContent =
-          'اضغط على زر "لغز جديد" للحصول على لغز 👇';
+      // تهيئة صفحة ألغاز الرياضيات
+      if (mathList) {
+        renderMathRiddles();
       }
     })
     .catch((error) => {
@@ -53,6 +64,10 @@ function loadRiddles() {
       if (riddleText) {
         riddleText.textContent =
           "تعذر تحميل الألغاز. يرجى إعادة تحميل الصفحة أو التأكد من الملفات.";
+      }
+      if (mathList) {
+        mathList.innerHTML =
+          '<p class="small-muted">تعذر تحميل ألغاز الرياضيات حاليًا.</p>';
       }
     });
 }
@@ -116,7 +131,7 @@ function copyRiddleLink() {
     });
 }
 
-/* ---------- البحث عن الألغاز ---------- */
+/* ---------- البحث عن الألغاز في الصفحة الرئيسية ---------- */
 
 function performSearch(query) {
   if (!searchResults) return;
@@ -159,14 +174,12 @@ function performSearch(query) {
     .join("");
 }
 
-// إرسال نموذج البحث
 if (searchForm && searchInput) {
   searchForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const query = searchInput.value;
     performSearch(query);
 
-    // تحديث الرابط بـ ?q= لزيادة فائدة الـ SEO
     const url = new URL(window.location);
     if (query && query.trim() !== "") {
       url.searchParams.set("q", query.trim());
@@ -177,7 +190,6 @@ if (searchForm && searchInput) {
   });
 }
 
-// الضغط على نتيجة بحث
 if (searchResults) {
   searchResults.addEventListener("click", (event) => {
     const button = event.target.closest(".search-result-item");
@@ -202,6 +214,35 @@ if (searchResults) {
   });
 }
 
+/* ---------- صفحة ألغاز الرياضيات ---------- */
+
+function renderMathRiddles() {
+  if (!mathList) return;
+
+  const mathRiddles = riddles.filter((r) => {
+    const type = (r.type || "").toLowerCase();
+    return type.includes("رياضيات") || type.includes("رياضي");
+  });
+
+  if (!mathRiddles.length) {
+    mathList.innerHTML =
+      '<p class="small-muted">لا توجد ألغاز رياضيات متاحة حاليًا.</p>';
+    return;
+  }
+
+  mathList.innerHTML = mathRiddles
+    .map(
+      (r, index) => `
+      <div class="math-item">
+        <h4>لغز رياضيات رقم ${index + 1}</h4>
+        <p>${r.question}</p>
+        <p class="math-answer"><strong>الحل:</strong> ${r.answer}</p>
+      </div>
+    `
+    )
+    .join("");
+}
+
 /* ---- صفحة اتصل بنا ---- */
 
 function handleContactSubmit(event) {
@@ -218,13 +259,12 @@ function handleContactSubmit(event) {
   messageInput.value = "";
 }
 
-// نجعل الدالة متاحة في الـ HTML
 window.handleContactSubmit = handleContactSubmit;
 
-// تحميل الألغاز عند فتح الصفحة الرئيسية
+// تحميل الألغاز عند فتح الصفحة المناسبة
 loadRiddles();
 
-// ربط الأزرار الأساسية
+// ربط الأزرار في الصفحة الرئيسية
 if (newRiddleBtn) {
   newRiddleBtn.addEventListener("click", showNewRiddle);
 }
